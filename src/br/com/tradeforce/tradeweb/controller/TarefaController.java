@@ -1,20 +1,14 @@
 package br.com.tradeforce.tradeweb.controller;
 
-import java.net.URI;
-
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tradeforce.tradeweb.dao.TarefaDao;
-import br.com.tradeforce.tradeweb.model.Localizacao;
-import br.com.tradeforce.tradeweb.model.Mercado;
+import br.com.tradeforce.tradeweb.to.TarefaTo;
 
 @RestController
 public class TarefaController {
@@ -29,29 +23,11 @@ public class TarefaController {
 	
 	@RequestMapping(value="gerarRota", method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String gerarRota(@RequestBody String strlPromotor, @RequestBody String strlMercados){
-		try {
-			JSONObject job = new JSONObject(strlMercado);
-			Mercado mercado = new Mercado();
-			mercado.setNome(job.getString("nome"));
-			mercado.setRazaoSocial(job.getString("razaoSocial"));
-			mercado.setEndereco(job.getString("endereco"));
-			
-			Localizacao localizacao = new Localizacao();
-			localizacao.setLatitude(Double.parseDouble("latitude"));
-			localizacao.setLongitude(Double.parseDouble("longitude"));
-			
-			mercado.setLocalizacao(localizacao);
-			
-			mercadoDao.inserir(mercado); //Insere a lista no banco de dados
-			
-			URI location = new URI("/lista/"+mercado.getId()); //Cria o URI
-			
-			return ResponseEntity.created(location).body(mercado);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		
+		TarefaTo tarefaTo = new TarefaTo();
+		tarefaTo.inserir(strlPromotor, strlMercados);
+		
+		return null;
 	}
 	
 }
