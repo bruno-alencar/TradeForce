@@ -22,7 +22,7 @@ public class MercadoController {
 	@Autowired
 	private MercadoDao mercadoDao;
 	
-	@RequestMapping(value="/mercado", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="/mercado/inserir", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Mercado> inserir(@RequestBody String strlMercado){
 		try {
 			JSONObject job = new JSONObject(strlMercado);
@@ -49,7 +49,7 @@ public class MercadoController {
 		}
 	}
 	
-	@RequestMapping(value="/listarMercados", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="/mercado/listar", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public List<Mercado> listar(){
 		return mercadoDao.listar();
 	}
