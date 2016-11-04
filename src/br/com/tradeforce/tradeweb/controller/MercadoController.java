@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,5 +54,11 @@ public class MercadoController {
 	public List<Mercado> listar(){
 		return mercadoDao.listar();
 	}
-
-}
+	
+	@RequestMapping(value="/mercado/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> excluir(@PathVariable("id") long idMercado){
+		mercadoDao.excluir(idMercado);
+		return ResponseEntity.noContent().build();
+	}
+	
+}	

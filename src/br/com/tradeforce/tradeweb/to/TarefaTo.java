@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import br.com.tradeforce.tradeweb.dao.TarefaDao;
 import br.com.tradeforce.tradeweb.model.Mercado;
@@ -61,4 +62,8 @@ public class TarefaTo {
 		Tarefa tarefa = tarefaDao.consultarPorPromotorId(idPromotor);
 		return tarefa;
 	}
-}
+	
+	public void excluir(@PathVariable("id") long idTarefa){
+		tarefaDao.excluir(idTarefa);
+	}
+}	

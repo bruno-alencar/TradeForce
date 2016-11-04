@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.uaihebert.factory.EasyCriteriaFactory;
 import com.uaihebert.model.EasyCriteria;
 
+import br.com.tradeforce.tradeweb.model.Mercado;
 import br.com.tradeforce.tradeweb.model.Tarefa;
 
 @Repository
@@ -28,5 +29,11 @@ public class TarefaDao {
 		EasyCriteria<Tarefa> easyCriteria = EasyCriteriaFactory.createQueryCriteria(manager, Tarefa.class);
 		easyCriteria.andEquals("promotor", idPromotor);
 		return easyCriteria.getSingleResult();
+	}
+	
+	@Transactional
+	public void excluir(Long idTarefa){
+		Tarefa tarefa = manager.find(Tarefa.class, idTarefa);
+		manager.remove(tarefa);
 	}
 }

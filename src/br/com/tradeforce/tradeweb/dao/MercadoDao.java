@@ -27,4 +27,11 @@ public class MercadoDao {
 		EasyCriteria<Mercado> easyCriteria = EasyCriteriaFactory.createQueryCriteria(manager, Mercado.class);
 		return easyCriteria.getResultList();
 	}
+	
+	@Transactional
+	public void excluir(Long idMercado){
+		Mercado mercado = manager.find(Mercado.class, idMercado);
+		manager.remove(mercado);
+	}
+	
 }

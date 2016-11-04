@@ -2,6 +2,7 @@ package br.com.tradeforce.tradeweb.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,5 +38,10 @@ public class TarefaController {
 	public Tarefa mostrarTarefa(@PathVariable("id") Long id){
 		return tarefaTo.consultarPorPromotorId(id);
 	}
-
+	
+	@RequestMapping(value="/tarefa/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> excluir(@PathVariable("id") long idTarefa){
+		tarefaTo.excluir(idTarefa);
+		return ResponseEntity.noContent().build();
+	}
 }
