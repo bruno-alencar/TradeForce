@@ -2,6 +2,7 @@ package br.com.tradeforce.tradeweb.controller;
 
 
 import java.net.URI;
+import java.util.List;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.tradeforce.tradeweb.dao.PromotorDao;
 import br.com.tradeforce.tradeweb.model.Empresa;
 import br.com.tradeforce.tradeweb.model.Localizacao;
+import br.com.tradeforce.tradeweb.model.Mercado;
 import br.com.tradeforce.tradeweb.model.Promotor;
 
 @RestController
@@ -24,7 +26,7 @@ public class PromotorController {
 	@Autowired
 	PromotorDao promotorDao = new PromotorDao();
 	
-	@RequestMapping(value="/promotor/adicionar", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="/promotor", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Promotor> inserir(@RequestBody String strlPromotor){
 		try {
 			JSONObject job = new JSONObject(strlPromotor);
@@ -49,7 +51,7 @@ public class PromotorController {
 			
 			promotorDao.inserir(promotor); //Insere a lista no banco de dados
 			
-			URI location = new URI("/lista/"+promotor.getId()); //Cria o URI
+			URI location = new URI("/promotor/"+promotor.getId()); //Cria o URI
 			
 			return ResponseEntity.created(location).body(promotor);
 			
@@ -59,8 +61,27 @@ public class PromotorController {
 		}
 	}
 	
-	@RequestMapping(value="/promotor/listar", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public List<Mercado> listar(){
+	
+	
+	
+	@RequestMapping(value="/promotor", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public List<Promotor> listar(){
+//		Promotor promotor = new Promotor();
+//		promotor.setLogin("fasdafs");
+//		promotor.setNome("safdasfda");
+//		
+//		Localizacao localizacao = new Localizacao();
+//		localizacao.setLatitude(41241.23);
+//		localizacao.setLongitude(41241.23);
+//		
+//		Empresa empresa = new Empresa();
+//		empresa.setNome("denis bogueiro");
+//		empresa.setRazaoSocial("fadsfasdf");
+//		
+//		promotor.setLocalizacao(localizacao);
+//		promotor.setEmpresa(empresa);
+//		promotorDao.inserir(promotor);
+//		
 		return promotorDao.listar();
 	}
 }

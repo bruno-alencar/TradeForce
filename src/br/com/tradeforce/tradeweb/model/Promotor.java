@@ -1,12 +1,16 @@
 package br.com.tradeforce.tradeweb.model;
 
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
+@DiscriminatorValue("P")
 public class Promotor extends Usuario{
 	
 	private int idade;

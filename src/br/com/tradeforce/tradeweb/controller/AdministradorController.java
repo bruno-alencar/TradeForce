@@ -21,7 +21,7 @@ public class AdministradorController {
 	AdministradorDao administradorDao = new AdministradorDao();
 	
 	
-	@RequestMapping(value="/adicionarAdministrador", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="/administrador", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Administrador> inserir(@RequestBody String strlAdministrador){
 		try {
 			JSONObject job = new JSONObject(strlAdministrador);

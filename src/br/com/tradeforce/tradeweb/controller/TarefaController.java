@@ -25,7 +25,7 @@ public class TarefaController {
 		
 	}
 	
-	@RequestMapping(value="gerarRota", method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="/tarefa/gerar", method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String gerarRota(@RequestBody String strlPromotor, @RequestBody String strlMercados){
 		
 		

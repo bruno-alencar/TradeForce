@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +22,8 @@ import br.com.tradeforce.tradeweb.model.Mercado;
 public class MercadoController {
 	@Autowired
 	private MercadoDao mercadoDao;
-	
-	@RequestMapping(value="/mercado/adicionar", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
+
+	@RequestMapping(value="/mercado", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Mercado> inserir(@RequestBody String strlMercado){
 		try {
 			JSONObject job = new JSONObject(strlMercado);
@@ -34,14 +33,15 @@ public class MercadoController {
 			mercado.setEndereco(job.getString("endereco"));
 			
 			Localizacao localizacao = new Localizacao();
-			localizacao.setLatitude(Double.parseDouble("latitude"));
-			localizacao.setLongitude(Double.parseDouble("longitude"));
+			JSONObject localizacaoObject = job.getJSONObject("localizacao");
+			localizacao.setLatitude(localizacaoObject.getDouble("latitude"));
+			localizacao.setLongitude(localizacaoObject.getDouble("longitude"));
 			
 			mercado.setLocalizacao(localizacao);
 			
 			mercadoDao.inserir(mercado); //Insere a lista no banco de dados
 			
-			URI location = new URI("/lista/"+mercado.getId()); //Cria o URI
+			URI location = new URI("/mercado/"+mercado.getId()); //Cria o URI
 			
 			return ResponseEntity.created(location).body(mercado);
 			
@@ -51,11 +51,10 @@ public class MercadoController {
 		}
 	}
 	
-	@RequestMapping(value="/mercado/listar", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="/mercado", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public List<Mercado> listar(){
 		return mercadoDao.listar();
 	}
-	
 	
 	@RequestMapping(value="/mercado/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> excluir(@PathVariable("id") long idMercado){
