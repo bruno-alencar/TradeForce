@@ -24,7 +24,7 @@ public class PromotorController {
 	@Autowired
 	PromotorDao promotorDao = new PromotorDao();
 	
-	@RequestMapping(value="/adicionarPromotor", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="/promotor/adicionar", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Promotor> inserir(@RequestBody String strlPromotor){
 		try {
 			JSONObject job = new JSONObject(strlPromotor);
@@ -57,6 +57,11 @@ public class PromotorController {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	@RequestMapping(value="/promotor/listar", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public List<Mercado> listar(){
+		return promotorDao.listar();
 	}
 }
 
