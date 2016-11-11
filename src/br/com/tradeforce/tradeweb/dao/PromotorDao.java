@@ -28,4 +28,10 @@ public class PromotorDao {
 		EasyCriteria<Promotor> easyCriteria = EasyCriteriaFactory.createQueryCriteria(manager, Promotor.class);
 		return easyCriteria.getResultList();
 	}
+
+	@Transactional
+	public void excluir(Long idPromotor){
+		Promotor promotor = manager.find(Promotor.class, idPromotor);
+		manager.remove(promotor);
+	}
 }

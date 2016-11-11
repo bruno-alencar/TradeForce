@@ -56,6 +56,10 @@ public class TarefaTo {
 		
 	}
 	
+	public List<Tarefa> listar(){
+		return tarefaDao.listar();
+	}
+	
 	public Tarefa consultarPorPromotorId(Long idPromotor){
 		Tarefa tarefa = tarefaDao.consultarPorPromotorId(idPromotor);
 		return tarefa;

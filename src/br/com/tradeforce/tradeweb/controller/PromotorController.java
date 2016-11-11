@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.tradeforce.tradeweb.dao.PromotorDao;
 import br.com.tradeforce.tradeweb.model.Empresa;
 import br.com.tradeforce.tradeweb.model.Localizacao;
-import br.com.tradeforce.tradeweb.model.Mercado;
 import br.com.tradeforce.tradeweb.model.Promotor;
 
 @RestController
@@ -35,16 +35,18 @@ public class PromotorController {
 			promotor.setLogin(job.getString("login"));
 			promotor.setNome(job.getString("nome"));
 			promotor.setSenha(job.getString("senha"));
-			promotor.setIdade(Integer.parseInt(job.getString("idade")));
+			promotor.setIdade(job.getInt("idade"));
 			
+			JSONObject job2 = new JSONObject("localizacao");
 			Localizacao localizacao = new Localizacao();
-			localizacao.setLatitude(Double.parseDouble(job.getString("latitude")));
-			localizacao.setLongitude(Double.parseDouble(job.getString("longitude")));
+			localizacao.setLatitude(job2.getDouble("latitude"));
+			localizacao.setLongitude(job2.getDouble("longitude"));
 			
 			promotor.setLocalizacao(localizacao);
 			
 			Empresa empresa = new Empresa();
-			empresa.setId(Long.parseLong(job.getString("idEmpresa")));
+			JSONObject job3 = new JSONObject("Empresa");
+			empresa.setId(job3.getLong("idEmpresa"));
 			
 			promotor.setEmpresa(empresa);
 			
@@ -61,28 +63,15 @@ public class PromotorController {
 		}
 	}
 	
-	
-	
-	
 	@RequestMapping(value="/promotor", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public List<Promotor> listar(){
-//		Promotor promotor = new Promotor();
-//		promotor.setLogin("fasdafs");
-//		promotor.setNome("safdasfda");
-//		
-//		Localizacao localizacao = new Localizacao();
-//		localizacao.setLatitude(41241.23);
-//		localizacao.setLongitude(41241.23);
-//		
-//		Empresa empresa = new Empresa();
-//		empresa.setNome("denis bogueiro");
-//		empresa.setRazaoSocial("fadsfasdf");
-//		
-//		promotor.setLocalizacao(localizacao);
-//		promotor.setEmpresa(empresa);
-//		promotorDao.inserir(promotor);
-//		
 		return promotorDao.listar();
+	}
+	
+	@RequestMapping(value="/promotor/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> excluir(@PathVariable("id") long idPromotor){
+		promotorDao.excluir(idPromotor);
+		return ResponseEntity.noContent().build();
 	}
 }
 

@@ -1,12 +1,15 @@
 package br.com.tradeforce.tradeweb.model;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+
 @Entity
 public class Mercado {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -15,7 +18,7 @@ public class Mercado {
 	private String nome;
 	private String razaoSocial;
 	
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.PERSIST})
 	private Localizacao localizacao;
 
 	public Long getId() {

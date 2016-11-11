@@ -1,5 +1,7 @@
 package br.com.tradeforce.tradeweb.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -35,5 +37,10 @@ public class TarefaDao {
 	public void excluir(Long idTarefa){
 		Tarefa tarefa = manager.find(Tarefa.class, idTarefa);
 		manager.remove(tarefa);
+	}
+
+	public List<Tarefa> listar() {
+		EasyCriteria<Tarefa> easyCriteria = EasyCriteriaFactory.createQueryCriteria(manager,Tarefa.class);
+		return easyCriteria.getResultList();
 	}
 }

@@ -1,12 +1,10 @@
 package br.com.tradeforce.tradeweb.model;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -15,12 +13,10 @@ public class Promotor extends Usuario{
 	
 	private int idade;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(cascade={CascadeType.PERSIST},fetch = FetchType.EAGER)
 	private Empresa empresa;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "localizacao_id")
-	
+	@ManyToOne(cascade={CascadeType.PERSIST},fetch = FetchType.EAGER)
 	private Localizacao localizacao;
 
 	public int getIdade() {
