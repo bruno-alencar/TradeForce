@@ -27,7 +27,7 @@ public class TarefaController {
 		
 	}
 	
-	@RequestMapping(value="tarefa", method = RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="tarefa", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public List<Tarefa> listar(){
 		return tarefaTo.listar();
 	}
