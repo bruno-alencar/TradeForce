@@ -1,12 +1,15 @@
 package br.com.tradeforce.tradeweb.model;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Tarefa {
@@ -15,16 +18,15 @@ public class Tarefa {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToMany
+	@ManyToMany
 	private List<Mercado> mercados;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Rota> rotas;
 	
-	@OneToOne
+	@ManyToOne
 	private Promotor promotor;
 	
-
 	public Long getId() {
 		return id;
 	}

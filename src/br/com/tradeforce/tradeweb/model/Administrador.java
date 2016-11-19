@@ -6,6 +6,5 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("A")
 public class Administrador extends Usuario {
-private String veiculo;
 
 }

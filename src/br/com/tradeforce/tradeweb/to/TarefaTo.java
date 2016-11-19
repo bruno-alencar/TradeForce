@@ -12,58 +12,32 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import br.com.tradeforce.tradeweb.dao.TarefaDao;
-import br.com.tradeforce.tradeweb.model.Mercado;
-import br.com.tradeforce.tradeweb.model.Promotor;
+import br.com.tradeforce.tradeweb.model.Auxiliar;
 import br.com.tradeforce.tradeweb.model.Rota;
 import br.com.tradeforce.tradeweb.model.Tarefa;
 
+@Component
 public class TarefaTo {
 
 	@Autowired
-	TarefaDao tarefaDao = new TarefaDao();
+	TarefaDao tarefaDao;
 
-	public void inserir(String strlPromotor, String strlMercados){
-
-		Promotor promotor = new Promotor();
-		List<Mercado> listMercados = new ArrayList<Mercado>();
-
-
-		JSONObject job2;
-		JSONObject job;
-		
-		try {
-			//Pegar promotor
-			job2 = new JSONObject(strlPromotor);
-			promotor.setId(Long.parseLong(job2.getString("id")));
-
-			//Pegar mercados adicionados
-			job = new JSONObject(strlMercados);
-			JSONArray arrayMercados = job.getJSONArray("mercados");
-
-			for(int i = 0; i < arrayMercados.length(); i++){
-				Mercado mercado = new Mercado();
-				mercado.setId(Long.parseLong(job2.getString("id")));
-
-				listMercados.add(mercado);
-			}
-
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+	public void inserir(Auxiliar auxiliar){
 
 		Tarefa tarefa = new Tarefa();
-		tarefa.setPromotor(promotor);
-		tarefa.setMercados(listMercados);		
+		tarefa.setPromotor(auxiliar.getPromotor());
+		tarefa.setMercados(auxiliar.getMercados());		
+		tarefa.setRotas(this.gerarRotas());
 		
 		tarefaDao.inserir(tarefa);
-		
+//		return tarefa;
 	}
 	
 	public List<Tarefa> listar(){
-		gerarRotas();
 		return tarefaDao.listar();
 	}
 	
@@ -78,38 +52,58 @@ public class TarefaTo {
 	
 	
 	
-	public void gerarRotas(){
+	public List<Rota> gerarRotas(){
 		
-//		JSONObject jobRoutes = new JSONObject("routes");
-//		
-//		JSONArray arrayRoutes = jobRoutes.getJSONArray("");
 		String routes = this.conectar("https://maps.googleapis.com/maps/api/directions/json?origin=Rio+Pequeno,SP&destination=Butanta,SP&mode=transit&types=route&key=AIzaSyCQetlePSuE-z8nGmpKh3NNLkzP_hHJiwk");
 		System.out.println(routes);
+		List<Rota> rotas = new ArrayList<Rota>();
 		try {
 			JSONObject jobRoutes = new JSONObject(routes);
 			
 			JSONArray arrayRoutes = jobRoutes.getJSONArray("routes");
-			List<Rota> rotas = new ArrayList<Rota>();
 			
 			for(int i = 0; i < arrayRoutes.length(); i ++){
 				Rota rota = new Rota();
+				
 				JSONObject jobFare = arrayRoutes.getJSONObject(i).getJSONObject("fare");
 				rota.setPreco(jobFare.getDouble("value"));
 				
 				JSONArray arrayLegs = arrayRoutes.getJSONObject(i).getJSONArray("legs");
 				
 				for(int j = 0; j < arrayLegs.length(); j++){
+					JSONArray arrayStepsGeral = arrayLegs.getJSONObject(j).getJSONArray("steps");
+					List<String> instrucoes = new ArrayList<String>();
+					List<String> polylines = new ArrayList<String>();
 					
+					for(int k = 0; k < arrayStepsGeral.length(); k++){
+						instrucoes.add(arrayStepsGeral.getJSONObject(k).getString("html_instructions"));
+						
+						JSONObject jobStepsGeralPolyline = arrayStepsGeral.getJSONObject(k).getJSONObject("polyline");
+						polylines.add(jobStepsGeralPolyline.getString("points"));
+						
+						if(arrayStepsGeral.getJSONObject(k).has("steps")){
+							JSONArray arrayStepsPassoAPasso = arrayStepsGeral.getJSONObject(k).getJSONArray("steps");
+						
+							for(int l = 0; l < arrayStepsPassoAPasso.length(); l ++){
+								if(arrayStepsPassoAPasso.getJSONObject(l).has("html_instructions")){
+									instrucoes.add(arrayStepsPassoAPasso.getJSONObject(l).getString("html_instructions"));
+								}
+								JSONObject jobStepsGeralPolylinePequeno = arrayStepsGeral.getJSONObject(l).getJSONObject("polyline");
+								polylines.add(jobStepsGeralPolylinePequeno.getString("points"));
+							}
+						}
+					}
+					
+					rota.setInstrucoes(instrucoes);
+					rota.setPolylines(polylines);
 				}
-				
-				System.out.println(rota.getPreco());
-				
+				rotas.add(rota);
 			}
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-	
+		return rotas;
 	}
 	
 	private String conectar(String link){
