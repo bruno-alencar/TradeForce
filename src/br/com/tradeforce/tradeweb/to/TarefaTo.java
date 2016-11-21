@@ -34,7 +34,6 @@ public class TarefaTo {
 		tarefa.setRotas(this.gerarRotas());
 		
 		tarefaDao.inserir(tarefa);
-//		return tarefa;
 	}
 	
 	public List<Tarefa> listar(){

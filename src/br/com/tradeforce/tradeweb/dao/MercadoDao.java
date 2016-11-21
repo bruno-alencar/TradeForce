@@ -34,4 +34,11 @@ public class MercadoDao {
 		manager.remove(mercado);
 	}
 	
+	@Transactional
+	public Mercado consultarPorId(Long id) {
+		EasyCriteria<Mercado> easyCriteria = EasyCriteriaFactory.createQueryCriteria(manager, Mercado.class);
+		easyCriteria.andEquals("id", id);
+		return easyCriteria.getSingleResult();
+	}
+	
 }

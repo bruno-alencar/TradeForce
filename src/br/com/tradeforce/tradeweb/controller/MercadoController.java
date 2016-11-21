@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.tradeforce.tradeweb.dao.LocalizacaoDao;
 import br.com.tradeforce.tradeweb.dao.MercadoDao;
 import br.com.tradeforce.tradeweb.model.Localizacao;
 import br.com.tradeforce.tradeweb.model.Mercado;
+import br.com.tradeforce.tradeweb.to.MercadoTo;
 
 @RestController
 public class MercadoController {
 	@Autowired
 	private MercadoDao mercadoDao;
-	
+
 	@Autowired
-	private LocalizacaoDao localizacaoDao;
+	private MercadoTo mercadoTo;
 
 	@RequestMapping(value="/mercado", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Mercado> inserir(@RequestBody String strlMercado){
@@ -60,10 +60,17 @@ public class MercadoController {
 		return mercadoDao.listar();
 	}
 	
+	@RequestMapping(value="/mercado/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public Mercado listar(@PathVariable("id") Long id){
+		return mercadoTo.consultarPorId(id);
+	}
+	
+	
 	@RequestMapping(value="/mercado/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> excluir(@PathVariable("id") long idMercado){
 		mercadoDao.excluir(idMercado);
 		return ResponseEntity.noContent().build();
 	}
+	
 }
 	

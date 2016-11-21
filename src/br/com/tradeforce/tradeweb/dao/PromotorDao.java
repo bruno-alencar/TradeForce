@@ -34,4 +34,13 @@ public class PromotorDao {
 		Promotor promotor = manager.find(Promotor.class, idPromotor);
 		manager.remove(promotor);
 	}
+	
+	@Transactional
+	public Promotor consultarPorId(Long id) {
+		EasyCriteria<Promotor> easyCriteria = EasyCriteriaFactory.createQueryCriteria(manager, Promotor.class);
+		easyCriteria.andEquals("id", id);
+		return easyCriteria.getSingleResult();
+	}
+	
+	
 }

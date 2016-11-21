@@ -16,26 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tradeforce.tradeweb.dao.PromotorDao;
 import br.com.tradeforce.tradeweb.model.Promotor;
+import br.com.tradeforce.tradeweb.to.PromotorTo;
 
 @RestController
 public class PromotorController {
 
 	@Autowired
-	PromotorDao promotorDao = new PromotorDao();
+	private PromotorDao promotorDao = new PromotorDao();
+	@Autowired
+	private PromotorTo promotorTo;
 	
 	@RequestMapping(value="/promotor", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Promotor> inserir(@RequestBody Promotor promotor){
 		try {
-			
-		
-			
-		
-			
-			
-			
-		
-			
-		
 			
 			promotorDao.inserir(promotor); //Insere a lista no banco de dados
 			
@@ -53,6 +46,12 @@ public class PromotorController {
 	public List<Promotor> listar(){
 		return promotorDao.listar();
 	}
+	
+	@RequestMapping(value="/promotor/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public Promotor listar(@PathVariable("id") Long id){
+		return promotorTo.consultarPorId(id);
+	}
+	
 	
 	@RequestMapping(value="/promotor/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> excluir(@PathVariable("id") long idPromotor){
