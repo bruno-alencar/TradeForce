@@ -33,7 +33,7 @@ public class AdministradorController {
 			
 			administradorDao.inserir(administrador); //Insere a lista no banco de dados
 			
-			URI location = new URI("/lista/"+administrador.getId()); //Cria o URI
+			URI location = new URI("/administrador/"+administrador.getId()); //Cria o URI
 			
 			return ResponseEntity.created(location).body(administrador);
 			

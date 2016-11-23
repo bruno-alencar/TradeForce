@@ -35,6 +35,17 @@ public class MercadoDao {
 	}
 	
 	@Transactional
+	public void atualizar(Mercado mercado){
+		Mercado mercadoAtualizar = manager.find(Mercado.class, mercado.getId());
+		mercadoAtualizar.setEndereco(mercado.getEndereco());
+		mercadoAtualizar.setLocalizacao(mercado.getLocalizacao());
+		mercadoAtualizar.setNome(mercado.getNome());
+		mercadoAtualizar.setRazaoSocial(mercado.getRazaoSocial());
+		manager.persist(mercadoAtualizar);
+	}
+	
+	
+	@Transactional
 	public Mercado consultarPorId(Long id) {
 		EasyCriteria<Mercado> easyCriteria = EasyCriteriaFactory.createQueryCriteria(manager, Mercado.class);
 		easyCriteria.andEquals("id", id);

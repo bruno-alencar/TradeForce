@@ -42,5 +42,16 @@ public class PromotorDao {
 		return easyCriteria.getSingleResult();
 	}
 	
+	@Transactional
+	public void atualizar(Promotor promotor){
+		Promotor promotorAtualizar = manager.find(Promotor.class, promotor.getId());
+		promotorAtualizar.setEmpresa(promotor.getEmpresa());
+		promotorAtualizar.setIdade(promotor.getIdade());
+		promotorAtualizar.setLocalizacao(promotor.getLocalizacao());
+		promotorAtualizar.setLogin(promotor.getLogin());
+		promotorAtualizar.setNome(promotor.getNome());
+		promotorAtualizar.setSenha(promotor.getSenha());
+		manager.persist(promotorAtualizar);
+	}
 	
 }

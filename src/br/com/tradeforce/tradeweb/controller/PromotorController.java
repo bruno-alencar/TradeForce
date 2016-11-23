@@ -58,5 +58,16 @@ public class PromotorController {
 		promotorDao.excluir(idPromotor);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@RequestMapping(value="/promotor/{id}", method=RequestMethod.PUT, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<Void>  atualizar(@PathVariable("id") long idPromotor, @RequestBody Promotor promotor) {
+		try{
+			promotor.setId(idPromotor);
+			promotorDao.atualizar(promotor);
+			return ResponseEntity.noContent().build();
+		} catch (Exception e){
+			return ResponseEntity.notFound().build();
+		  }
+	}
 }
 

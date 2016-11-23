@@ -72,5 +72,16 @@ public class MercadoController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@RequestMapping(value="/mercado/{id}", method=RequestMethod.PUT, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<Void>  atualizar(@PathVariable("id") long idMercado, @RequestBody Mercado mercado) {
+		try{
+			mercado.setId(idMercado);
+			mercadoDao.atualizar(mercado);
+			return ResponseEntity.noContent().build();
+		} catch (Exception e){
+			return ResponseEntity.notFound().build();
+		  }
+	}
+	
 }
 	
