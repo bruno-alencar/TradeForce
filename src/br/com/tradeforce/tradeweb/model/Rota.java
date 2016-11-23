@@ -18,6 +18,7 @@ public class Rota {
 	private Long id;
 	private String nome;
 	private Double preco;
+	private int sequencia;
 	
 	@ElementCollection
 	@CollectionTable(name="instrucoes", joinColumns=@JoinColumn(name="rota_id"))
@@ -27,6 +28,13 @@ public class Rota {
 	@CollectionTable(name="polylines", joinColumns=@JoinColumn(name="rota_id"))
 	private List<String> polylines= new ArrayList<String>();
 	
+	
+	public int getSequencia() {
+		return sequencia;
+	}
+	public void setSequencia(int sequencia) {
+		this.sequencia = sequencia;
+	}
 	public List<String> getInstrucoes() {
 		return instrucoes;
 	}
