@@ -48,7 +48,7 @@ public class PromotorController {
 	}
 	
 	@RequestMapping(value="/promotor/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public Promotor listar(@PathVariable("id") Long id){
+	public Promotor consultarPorId(@PathVariable("id") Long id){
 		return promotorTo.consultarPorId(id);
 	}
 	

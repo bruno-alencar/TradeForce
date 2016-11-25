@@ -39,7 +39,9 @@ public class RotaTo {
 				+ "&waypoints=" + waypoints
 				+ "&key=AIzaSyCQetlePSuE-z8nGmpKh3NNLkzP_hHJiwk";
 		
-		String routes = this.conectar("");
+		System.out.println(link);
+		
+		String routes = this.conectar(link);
 	}
 	
 	
