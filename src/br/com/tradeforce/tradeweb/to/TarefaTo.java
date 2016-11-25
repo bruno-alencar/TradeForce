@@ -23,7 +23,7 @@ public class TarefaTo {
 		Tarefa tarefa = new Tarefa();
 		tarefa.setPromotor(auxiliar.getPromotor());
 		tarefa.setMercados(auxiliar.getMercados());		
-//		tarefa.setRotas(rotaTo.gerarRotas());
+		tarefa.setRotas(rotaTo.gerarRotas(auxiliar));
 
 		tarefaDao.inserir(tarefa);
 	}

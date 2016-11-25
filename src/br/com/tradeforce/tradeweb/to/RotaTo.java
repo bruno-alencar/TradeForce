@@ -13,17 +13,55 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.tradeforce.tradeweb.model.Auxiliar;
+import br.com.tradeforce.tradeweb.model.Localizacao;
 import br.com.tradeforce.tradeweb.model.Mercado;
 import br.com.tradeforce.tradeweb.model.Rota;
 
 public class RotaTo {
-	public List<Rota> gerarRotas(){
+	
+	public List<Rota> gerarRotas(Auxiliar auxiliar){
 		
-		return null;
+		List<Localizacao> localizacoes = this.tracarMelhorRotaWaypoints(auxiliar);
+		
+		List<Rota> rotas = new ArrayList<Rota>();
+		int sequencia = 0;
+		
+		for(int i = 0; i < localizacoes.size(); i++){
+			List<Rota> rotasGeradas = new ArrayList<Rota>();
+			
+			if(i == 0){
+				rotasGeradas = this.gerarCaminhos(auxiliar.getPromotor().getLocalizacao().getLatitude(),
+						auxiliar.getPromotor().getLocalizacao().getLongitude(),
+						localizacoes.get(i).getLatitude(),
+						localizacoes.get(i).getLongitude());
+				
+//			}else if(i == localizacoes.size()-1){
+//				rotasGeradas = this.gerarCaminhos(localizacoes.get(i).getLatitude(),
+//						localizacoes.get(i).getLongitude(),
+//						auxiliar.getPromotor().getLocalizacao().getLatitude(),
+//						auxiliar.getPromotor().getLocalizacao().getLongitude());
+//			}
+			}else{
+				rotasGeradas = this.gerarCaminhos(localizacoes.get(i-1).getLatitude(),
+						localizacoes.get(i-1).getLongitude(),
+						localizacoes.get(i).getLatitude(),
+						localizacoes.get(i).getLongitude());
+			}
+			
+			Rota rota = this.validarMenorPreco(rotasGeradas);
+			rota.setSequencia(sequencia);
+			
+			rotas.add(rota);
+			
+			sequencia++;
+		}
+		return rotas;
+		
 	}
 	
-	private void tracarMelhorRotaWaypoints(Auxiliar auxiliar){
-		String origin = auxiliar.getPromotor().getLocalizacao().getLatitude().toString() +","+auxiliar.getPromotor().getLocalizacao().getLongitude();
+	
+	private List<Localizacao> tracarMelhorRotaWaypoints(Auxiliar auxiliar){
+		String origin = auxiliar.getPromotor().getLocalizacao().getLatitude()+","+auxiliar.getPromotor().getLocalizacao().getLongitude();
 		String destination = origin;
 		String waypoints ="";
 		
@@ -42,13 +80,57 @@ public class RotaTo {
 		System.out.println(link);
 		
 		String routes = this.conectar(link);
+		List<Localizacao>localizacoes = new ArrayList<Localizacao>();
+		
+		try {
+			JSONObject jobRoutes = new JSONObject(routes);
+			
+			JSONArray arrayRoutes = jobRoutes.getJSONArray("routes");
+			
+			for(int i = 0; i < arrayRoutes.length(); i++){
+				JSONArray arrayLegs = arrayRoutes.getJSONObject(i).getJSONArray("legs");
+				
+				for(int j = 0; j <arrayLegs.length(); j++){
+					Localizacao localizacao = new Localizacao();
+					
+					JSONObject jobEndLocation = arrayLegs.getJSONObject(j).getJSONObject("end_location");
+					localizacao.setLatitude(jobEndLocation.getDouble("lat"));
+					localizacao.setLongitude(jobEndLocation.getDouble("lng"));
+					
+					localizacoes.add(localizacao);
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return localizacoes;
 	}
 	
+	private Rota validarMenorPreco(List<Rota> rotas){
+		
+		Rota auxiliar = new Rota();
+		auxiliar = rotas.get(0);
+		
+		for(int i = 1;i < rotas.size(); i ++){
+			if(auxiliar.getPreco() > rotas.get(i).getPreco()){
+				auxiliar = rotas.get(i);
+			}
+		}
+		return auxiliar;
+	}
 	
-	private List<Rota> gerarCaminhos(Double latitue, Double longitude){
-
-		String routes = this.conectar("https://maps.googleapis.com/maps/api/directions/json?origin=Rio+Pequeno,SP&destination=Butanta,SP&mode=transit&types=route&key=AIzaSyCQetlePSuE-z8nGmpKh3NNLkzP_hHJiwk");
-		System.out.println(routes);
+	private List<Rota> gerarCaminhos(Double latitudeInicial, Double longitudeInicial, Double latitudeFinal, Double longitudeFinal){
+		
+		String origin = latitudeInicial+ "," +longitudeInicial;
+		String destination = latitudeFinal+ "," +longitudeFinal;
+		
+		String routes = this.conectar("https://maps.googleapis.com/maps/api/directions/json?"
+				+ "origin="+ origin
+				+ "&destination="+ destination
+				+ "&mode=transit&types=route&key=AIzaSyCQetlePSuE-z8nGmpKh3NNLkzP_hHJiwk");
+		
+		
 		List<Rota> rotas = new ArrayList<Rota>();
 		try {
 			JSONObject jobRoutes = new JSONObject(routes);
