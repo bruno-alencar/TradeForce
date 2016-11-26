@@ -19,9 +19,7 @@ import br.com.tradeforce.tradeweb.model.Rota;
 
 public class RotaTo {
 	
-	public List<Rota> gerarRotas(Auxiliar auxiliar){
-		
-		List<Localizacao> localizacoes = this.tracarMelhorRotaWaypoints(auxiliar);
+	public List<Rota> gerarRotas(Auxiliar auxiliar, List<Localizacao>localizacoes){
 		
 		List<Rota> rotas = new ArrayList<Rota>();
 		int sequencia = 0;
@@ -49,18 +47,34 @@ public class RotaTo {
 			}
 			
 			Rota rota = this.validarMenorPreco(rotasGeradas);
+			
 			rota.setSequencia(sequencia);
 			
 			rotas.add(rota);
 			
 			sequencia++;
 		}
+		
 		return rotas;
 		
 	}
 	
+	public List<Mercado> ordernarMercados(List<Mercado> mercados, List<Localizacao> localizacoes){
+		List<Mercado> mercadoOrdenado = new ArrayList<Mercado>();
+		
+		for(Localizacao localizacao : localizacoes){
+			for(Mercado mercado: mercados){
+				if(mercado.getLocalizacao().getLatitude() == localizacao.getLatitude()&&
+						mercado.getLocalizacao().getLongitude() == localizacao.getLongitude()){
+					mercadoOrdenado.add(mercado);
+				}
+			}
+		}
+		
+		return mercadoOrdenado;
+	}
 	
-	private List<Localizacao> tracarMelhorRotaWaypoints(Auxiliar auxiliar){
+	public List<Localizacao> tracarMelhorRotaWaypoints(Auxiliar auxiliar){
 		String origin = auxiliar.getPromotor().getLocalizacao().getLatitude()+","+auxiliar.getPromotor().getLocalizacao().getLongitude();
 		String destination = origin;
 		String waypoints ="";

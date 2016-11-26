@@ -41,7 +41,7 @@ public class TarefaController {
 		try {
 			Tarefa tarefa = new Tarefa();
 			tarefaTo.inserir(auxiliar);
-
+			
 			URI location = new URI("/tarefa/" + tarefa.getId()); // Cria o URI
 
 			return ResponseEntity.created(location).body(tarefa);

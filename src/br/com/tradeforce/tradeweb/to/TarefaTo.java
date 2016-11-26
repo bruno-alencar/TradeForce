@@ -1,13 +1,16 @@
 package br.com.tradeforce.tradeweb.to;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import br.com.tradeforce.tradeweb.dao.TarefaDao;
 import br.com.tradeforce.tradeweb.model.Auxiliar;
+import br.com.tradeforce.tradeweb.model.Localizacao;
+import br.com.tradeforce.tradeweb.model.Mercado;
+import br.com.tradeforce.tradeweb.model.Rota;
 import br.com.tradeforce.tradeweb.model.Tarefa;
 
 @Component
@@ -16,18 +19,26 @@ public class TarefaTo {
 	@Autowired
 	private TarefaDao tarefaDao;
 
-	private RotaTo rotaTo;
+	private RotaTo rotaTo = new RotaTo();
 
 	public void inserir(Auxiliar auxiliar){
-
+		
+		List<Localizacao> localizacoes = new ArrayList<Localizacao>();
+		List<Mercado> mercados = new ArrayList<Mercado>();
+		List<Rota> rotas = new ArrayList<Rota>();
+		
+		localizacoes = rotaTo.tracarMelhorRotaWaypoints(auxiliar);
+		mercados = rotaTo.ordernarMercados(auxiliar.getMercados(), localizacoes);
+		rotas = rotaTo.gerarRotas(auxiliar,localizacoes);
+		
 		Tarefa tarefa = new Tarefa();
 		tarefa.setPromotor(auxiliar.getPromotor());
-		tarefa.setMercados(auxiliar.getMercados());		
-		tarefa.setRotas(rotaTo.gerarRotas(auxiliar));
+		tarefa.setMercados(mercados);	
+		tarefa.setRotas(rotas);
 
 		tarefaDao.inserir(tarefa);
 	}
-
+	
 	public List<Tarefa> listar(){
 		return tarefaDao.listar();
 	}
@@ -37,9 +48,9 @@ public class TarefaTo {
 		return tarefa;
 	}
 
-	public void excluir(@PathVariable("id") long idTarefa){
+	public void excluir(Long idTarefa){
 		tarefaDao.excluir(idTarefa);
 	}
-
+	
 }
 
