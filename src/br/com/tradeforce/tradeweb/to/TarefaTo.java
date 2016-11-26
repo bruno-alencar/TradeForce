@@ -28,18 +28,19 @@ public class TarefaTo {
 		List<Rota> rotas = new ArrayList<Rota>();
 		
 		localizacoes = rotaTo.tracarMelhorRotaWaypoints(auxiliar);
-		mercados = rotaTo.ordernarMercados(auxiliar.getMercados(), localizacoes);
+//		mercados = rotaTo.ordernarMercados(auxiliar.getMercados(), localizacoes);
 		rotas = rotaTo.gerarRotas(auxiliar,localizacoes);
 		
 		Tarefa tarefa = new Tarefa();
 		tarefa.setPromotor(auxiliar.getPromotor());
-		tarefa.setMercados(mercados);	
+//		tarefa.setMercados(mercados);	
+		tarefa.setMercados(auxiliar.getMercados());
 		tarefa.setRotas(rotas);
 
 		tarefaDao.inserir(tarefa);
 	}
 	
-	public List<Tarefa> listar(){
+	public Tarefa listar(){
 		return tarefaDao.listar();
 	}
 

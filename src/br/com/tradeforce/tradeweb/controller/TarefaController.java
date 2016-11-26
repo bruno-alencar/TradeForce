@@ -26,13 +26,13 @@ public class TarefaController {
 	@Autowired
 	TarefaTo tarefaTo;
 
-	@RequestMapping(value = "", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public void init() {
+//	@RequestMapping(value = "", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//	public void init() {
+//
+//	}
 
-	}
-
-	@RequestMapping(value = "tarefa", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public List<Tarefa> listar() {
+	@RequestMapping(value = "/tarefa", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public Tarefa listar() {
 		return tarefaTo.listar();
 	}
 

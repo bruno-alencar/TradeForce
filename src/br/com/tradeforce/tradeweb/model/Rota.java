@@ -6,10 +6,14 @@ import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 public class Rota {
@@ -20,11 +24,12 @@ public class Rota {
 	private Double preco;
 	private int sequencia;
 	
-	@ElementCollection
+	@Fetch(FetchMode.SELECT)
+	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="instrucoes", joinColumns=@JoinColumn(name="rota_id"))
 	private List<String> instrucoes = new ArrayList<String>();
 	
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="polylines", joinColumns=@JoinColumn(name="rota_id"))
 	private List<String> polylines= new ArrayList<String>();
 	

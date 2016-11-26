@@ -139,10 +139,15 @@ public class RotaTo {
 		String origin = latitudeInicial+ "," +longitudeInicial;
 		String destination = latitudeFinal+ "," +longitudeFinal;
 		
-		String routes = this.conectar("https://maps.googleapis.com/maps/api/directions/json?"
+		String link = "https://maps.googleapis.com/maps/api/directions/json?"
 				+ "origin="+ origin
 				+ "&destination="+ destination
-				+ "&mode=transit&types=route&key=AIzaSyCQetlePSuE-z8nGmpKh3NNLkzP_hHJiwk");
+				+ "&mode=transit&types=route&key=AIzaSyCQetlePSuE-z8nGmpKh3NNLkzP_hHJiwk";
+		
+		System.out.println(link);
+		String routes = this.conectar(link);
+		
+		System.out.println(routes);
 		
 		
 		List<Rota> rotas = new ArrayList<Rota>();
@@ -153,10 +158,11 @@ public class RotaTo {
 
 			for(int i = 0; i < arrayRoutes.length(); i ++){
 				Rota rota = new Rota();
-
-				JSONObject jobFare = arrayRoutes.getJSONObject(i).getJSONObject("fare");
-				rota.setPreco(jobFare.getDouble("value"));
-
+				
+				if(arrayRoutes.getJSONObject(i).has("fare")){
+					JSONObject jobFare = arrayRoutes.getJSONObject(i).getJSONObject("fare");
+					rota.setPreco(jobFare.getDouble("value"));
+				}
 				JSONArray arrayLegs = arrayRoutes.getJSONObject(i).getJSONArray("legs");
 
 				for(int j = 0; j < arrayLegs.length(); j++){
@@ -175,10 +181,16 @@ public class RotaTo {
 
 							for(int l = 0; l < arrayStepsPassoAPasso.length(); l ++){
 								if(arrayStepsPassoAPasso.getJSONObject(l).has("html_instructions")){
+									System.out.println(arrayStepsPassoAPasso.getJSONObject(l).getString("html_instructions"));
 									instrucoes.add(arrayStepsPassoAPasso.getJSONObject(l).getString("html_instructions"));
 								}
-								JSONObject jobStepsGeralPolylinePequeno = arrayStepsGeral.getJSONObject(l).getJSONObject("polyline");
-								polylines.add(jobStepsGeralPolylinePequeno.getString("points"));
+								
+								if(arrayStepsPassoAPasso.getJSONObject(l).has("polyline")){
+									
+									JSONObject jobStepsGeralPolylinePequeno = arrayStepsPassoAPasso.getJSONObject(l).getJSONObject("polyline");
+									System.out.println(jobStepsGeralPolylinePequeno.getString("points"));
+									polylines.add(jobStepsGeralPolylinePequeno.getString("points"));
+								}
 							}
 						}
 					}
