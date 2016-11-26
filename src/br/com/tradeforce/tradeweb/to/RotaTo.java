@@ -89,7 +89,7 @@ public class RotaTo {
 				+ "origin=" + origin
 				+ "&destination=" + destination
 				+ "&waypoints=" + waypoints
-				+ "&key=AIzaSyCQetlePSuE-z8nGmpKh3NNLkzP_hHJiwk";
+				+ "&language=pt-br&key=AIzaSyCQetlePSuE-z8nGmpKh3NNLkzP_hHJiwk";
 		
 		
 		String routes = this.conectar(link);
@@ -141,7 +141,7 @@ public class RotaTo {
 		String link = "https://maps.googleapis.com/maps/api/directions/json?"
 				+ "origin="+ origin
 				+ "&destination="+ destination
-				+ "&mode=transit&types=route&key=AIzaSyCQetlePSuE-z8nGmpKh3NNLkzP_hHJiwk";
+				+ "&language=pt-br&mode=transit&types=route&key=AIzaSyCQetlePSuE-z8nGmpKh3NNLkzP_hHJiwk";
 		
 		String routes = this.conectar(link);
 		
