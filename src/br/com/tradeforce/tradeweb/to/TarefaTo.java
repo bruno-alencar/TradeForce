@@ -40,7 +40,7 @@ public class TarefaTo {
 		tarefaDao.inserir(tarefa);
 	}
 	
-	public Tarefa listar(){
+	public List<Tarefa> listar(){
 		return tarefaDao.listar();
 	}
 

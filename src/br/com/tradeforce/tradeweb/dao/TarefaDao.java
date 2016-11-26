@@ -39,9 +39,9 @@ public class TarefaDao {
 		manager.remove(tarefa);
 	}
 	
-	public Tarefa listar() {
+	public List<Tarefa> listar() {
 		EasyCriteria<Tarefa> easyCriteria = EasyCriteriaFactory.createQueryCriteria(manager,Tarefa.class);
-		return easyCriteria.getSingleResult();
+		return easyCriteria.getResultList();
 	}
 	
 }

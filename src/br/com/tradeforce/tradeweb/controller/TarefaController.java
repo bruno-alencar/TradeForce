@@ -32,7 +32,7 @@ public class TarefaController {
 //	}
 
 	@RequestMapping(value = "/tarefa", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public Tarefa listar() {
+	public List<Tarefa> listar() {
 		return tarefaTo.listar();
 	}
 

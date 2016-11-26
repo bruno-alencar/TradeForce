@@ -91,7 +91,6 @@ public class RotaTo {
 				+ "&waypoints=" + waypoints
 				+ "&key=AIzaSyCQetlePSuE-z8nGmpKh3NNLkzP_hHJiwk";
 		
-		System.out.println(link);
 		
 		String routes = this.conectar(link);
 		List<Localizacao>localizacoes = new ArrayList<Localizacao>();
@@ -144,10 +143,7 @@ public class RotaTo {
 				+ "&destination="+ destination
 				+ "&mode=transit&types=route&key=AIzaSyCQetlePSuE-z8nGmpKh3NNLkzP_hHJiwk";
 		
-		System.out.println(link);
 		String routes = this.conectar(link);
-		
-		System.out.println(routes);
 		
 		
 		List<Rota> rotas = new ArrayList<Rota>();
@@ -162,6 +158,7 @@ public class RotaTo {
 				if(arrayRoutes.getJSONObject(i).has("fare")){
 					JSONObject jobFare = arrayRoutes.getJSONObject(i).getJSONObject("fare");
 					rota.setPreco(jobFare.getDouble("value"));
+					System.out.println(rota.getPreco());
 				}
 				JSONArray arrayLegs = arrayRoutes.getJSONObject(i).getJSONArray("legs");
 
@@ -181,14 +178,12 @@ public class RotaTo {
 
 							for(int l = 0; l < arrayStepsPassoAPasso.length(); l ++){
 								if(arrayStepsPassoAPasso.getJSONObject(l).has("html_instructions")){
-									System.out.println(arrayStepsPassoAPasso.getJSONObject(l).getString("html_instructions"));
 									instrucoes.add(arrayStepsPassoAPasso.getJSONObject(l).getString("html_instructions"));
 								}
 								
 								if(arrayStepsPassoAPasso.getJSONObject(l).has("polyline")){
 									
 									JSONObject jobStepsGeralPolylinePequeno = arrayStepsPassoAPasso.getJSONObject(l).getJSONObject("polyline");
-									System.out.println(jobStepsGeralPolylinePequeno.getString("points"));
 									polylines.add(jobStepsGeralPolylinePequeno.getString("points"));
 								}
 							}
