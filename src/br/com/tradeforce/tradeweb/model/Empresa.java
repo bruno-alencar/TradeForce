@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.br.CNPJ;
+
 @Entity
 public class Empresa {
 	@Id
@@ -13,6 +15,7 @@ public class Empresa {
 	
 	private String nome;
 	private String razaoSocial;
+	@CNPJ
 	private Long cnpj;
 	
 	
