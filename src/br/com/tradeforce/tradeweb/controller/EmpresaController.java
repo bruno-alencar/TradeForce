@@ -27,7 +27,7 @@ public class EmpresaController {
 		try {
 			empresaTo.inserir(empresa); //Insere a lista no banco de dados
 
-			URI location = new URI("/promotor/"+empresa.getId()); //Cria o URI
+			URI location = new URI("/empresa/"+empresa.getId()); //Cria o URI
 
 			return ResponseEntity.created(location).body(empresa);
 

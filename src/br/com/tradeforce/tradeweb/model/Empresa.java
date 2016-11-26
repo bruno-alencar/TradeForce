@@ -13,7 +13,7 @@ public class Empresa {
 	
 	private String nome;
 	private String razaoSocial;
-	private int cnpj;
+	private Long cnpj;
 	
 	
 	public Long getId() {
@@ -34,12 +34,13 @@ public class Empresa {
 	public void setRazaoSocial(String razaoSocial) {
 		this.razaoSocial = razaoSocial;
 	}
-	public int getCnpj() {
+	public Long getCnpj() {
 		return cnpj;
 	}
-	public void setCnpj(int cnpj) {
+	public void setCnpj(Long cnpj) {
 		this.cnpj = cnpj;
 	}
+	
 	
 	
 
