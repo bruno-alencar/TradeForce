@@ -30,7 +30,7 @@ public class PromotorController {
 	public ResponseEntity<Promotor> inserir(@RequestBody Promotor promotor){
 		try {
 			
-			promotorDao.inserir(promotor); //Insere a lista no banco de dados
+			promotorTo.inserir(promotor); //Insere a lista no banco de dados
 			
 			URI location = new URI("/promotor/"+promotor.getId()); //Cria o URI
 			
@@ -44,7 +44,7 @@ public class PromotorController {
 	
 	@RequestMapping(value="/promotor", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public List<Promotor> listar(){
-		return promotorDao.listar();
+		return promotorTo.listar();
 	}
 	
 	@RequestMapping(value="/promotor/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -55,15 +55,15 @@ public class PromotorController {
 	
 	@RequestMapping(value="/promotor/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> excluir(@PathVariable("id") long idPromotor){
-		promotorDao.excluir(idPromotor);
+		promotorTo.excluir(idPromotor);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(value="/promotor/{id}", method=RequestMethod.PUT, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Void>  atualizar(@PathVariable("id") long idPromotor, @RequestBody Promotor promotor) {
+	public ResponseEntity<Void> alterar(@PathVariable("id") long idPromotor, @RequestBody Promotor promotor) {
 		try{
 			promotor.setId(idPromotor);
-			promotorDao.atualizar(promotor);
+			promotorDao.alterar(promotor);
 			return ResponseEntity.noContent().build();
 		} catch (Exception e){
 			return ResponseEntity.notFound().build();

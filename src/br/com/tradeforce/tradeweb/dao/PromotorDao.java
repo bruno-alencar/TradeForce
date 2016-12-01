@@ -43,7 +43,7 @@ public class PromotorDao {
 	}
 	
 	@Transactional
-	public void atualizar(Promotor promotor){
+	public void alterar(Promotor promotor){
 		Promotor promotorAtualizar = manager.find(Promotor.class, promotor.getId());
 		promotorAtualizar.setEmpresa(promotor.getEmpresa());
 		promotorAtualizar.setIdade(promotor.getIdade());

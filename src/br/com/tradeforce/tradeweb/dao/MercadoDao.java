@@ -35,7 +35,7 @@ public class MercadoDao {
 	}
 	
 	@Transactional
-	public void atualizar(Mercado mercado){
+	public void alterar(Mercado mercado){
 		Mercado mercadoAtualizar = manager.find(Mercado.class, mercado.getId());
 		mercadoAtualizar.setEndereco(mercado.getEndereco());
 		mercadoAtualizar.setLocalizacao(mercado.getLocalizacao());
