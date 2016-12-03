@@ -126,6 +126,12 @@ public class RotaTo {
 		auxiliar = rotas.get(0);
 		
 		for(int i = 1;i < rotas.size(); i ++){
+			
+//			ROTA APÉ
+//			if(auxiliar.getPreco() == null){
+//				return auxiliar;
+//			}
+//			
 			if(auxiliar.getPreco() > rotas.get(i).getPreco()){
 				auxiliar = rotas.get(i);
 			}
@@ -141,10 +147,10 @@ public class RotaTo {
 		String link = "https://maps.googleapis.com/maps/api/directions/json?"
 				+ "origin="+ origin
 				+ "&destination="+ destination
-				+ "&language=pt-br&mode=transit&types=route&key=AIzaSyCQetlePSuE-z8nGmpKh3NNLkzP_hHJiwk";
+				+ "&language=pt-br&mode=transit&types=route&alternatives=true&key=AIzaSyCQetlePSuE-z8nGmpKh3NNLkzP_hHJiwk";
 		
 		String routes = this.conectar(link);
-		System.out.println("routes");
+		System.out.println(routes);
 		
 		List<Rota> rotas = new ArrayList<Rota>();
 		try {
