@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.tradeforce.tradeweb.dao.PromotorDao;
 import br.com.tradeforce.tradeweb.model.Promotor;
+import br.com.tradeforce.tradeweb.to.EmpresaTo;
 import br.com.tradeforce.tradeweb.to.PromotorTo;
 
 @RestController
 public class PromotorController {
 
 	@Autowired
-	private PromotorDao promotorDao = new PromotorDao();
+	private EmpresaTo empresaTo;
 	@Autowired
 	private PromotorTo promotorTo;
 	
@@ -63,7 +63,7 @@ public class PromotorController {
 	public ResponseEntity<Void> alterar(@PathVariable("id") long idPromotor, @RequestBody Promotor promotor) {
 		try{
 			promotor.setId(idPromotor);
-			promotorDao.alterar(promotor);
+			promotorTo.alterar(promotor);
 			return ResponseEntity.noContent().build();
 		} catch (Exception e){
 			return ResponseEntity.notFound().build();

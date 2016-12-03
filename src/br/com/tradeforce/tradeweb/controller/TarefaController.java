@@ -47,7 +47,7 @@ public class TarefaController {
 		}
 	}
 
-	@RequestMapping(value = "/tarefa/mostrar/{id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/tarefa/{id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public Tarefa mostrarTarefa(@PathVariable("id") Long id) {
 		return tarefaTo.consultarPorPromotorId(id);
 	}

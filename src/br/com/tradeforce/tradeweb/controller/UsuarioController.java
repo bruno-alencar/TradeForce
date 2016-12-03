@@ -42,6 +42,7 @@ public class UsuarioController {
 				claims.put("exp", exp);
 				claims.put("iss", ISSUER);
 				claims.put("id_usuario", usuario.getId());
+				claims.put("tipo", usuario.getTipo());
 				// gerar o token
 				String jwt = signer.sign(claims);
 				JSONObject token = new JSONObject();

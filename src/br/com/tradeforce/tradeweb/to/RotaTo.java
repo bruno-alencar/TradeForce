@@ -144,7 +144,7 @@ public class RotaTo {
 				+ "&language=pt-br&mode=transit&types=route&key=AIzaSyCQetlePSuE-z8nGmpKh3NNLkzP_hHJiwk";
 		
 		String routes = this.conectar(link);
-		
+		System.out.println("routes");
 		
 		List<Rota> rotas = new ArrayList<Rota>();
 		try {

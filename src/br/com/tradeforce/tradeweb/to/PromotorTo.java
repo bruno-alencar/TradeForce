@@ -12,6 +12,7 @@ import br.com.tradeforce.tradeweb.model.Promotor;
 public class PromotorTo {
 	@Autowired
 	private PromotorDao promotorDao;
+	
 
 	public Promotor consultarPorId(Long id) {
 		Promotor promotor = promotorDao.consultarPorId(id);
@@ -19,6 +20,7 @@ public class PromotorTo {
 	}
 	
 	public void inserir(Promotor promotor) {
+		
 		promotorDao.inserir(promotor);
 	}
 	

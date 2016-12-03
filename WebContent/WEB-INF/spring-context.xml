@@ -45,4 +45,6 @@
     </bean>
 	
 	<mvc:resources mapping="/resources/**" location="/resources/" />	
+	
+<!-- 	<mvc:interceptors><bean class="br.com.tradeforce.tradeweb.interceptor.Interceptor"></bean></mvc:interceptors> -->
 </beans>

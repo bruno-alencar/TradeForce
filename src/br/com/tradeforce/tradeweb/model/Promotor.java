@@ -14,12 +14,13 @@ public class Promotor extends Usuario{
 	private int idade;
 	private String endereco;
 	
-	@ManyToOne(cascade={CascadeType.PERSIST},fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Empresa empresa;
 	
 	@ManyToOne(cascade={CascadeType.PERSIST},fetch = FetchType.EAGER)
 	private Localizacao localizacao;
 
+	
 	public int getIdade() {
 		return idade;
 	}
@@ -33,6 +34,8 @@ public class Promotor extends Usuario{
 	}
 
 	public void setEmpresa(Empresa empresa) {
+		
+		System.out.println(empresa.getId());
 		this.empresa = empresa;
 	}
 
