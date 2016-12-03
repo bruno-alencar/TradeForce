@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 public class Promotor extends Usuario{
 	
 	private int idade;
+	private String endereco;
 	
 	@ManyToOne(cascade={CascadeType.PERSIST},fetch = FetchType.EAGER)
 	private Empresa empresa;
@@ -41,6 +42,14 @@ public class Promotor extends Usuario{
 
 	public void setLocalizacao(Localizacao localizacao) {
 		this.localizacao = localizacao;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
 
 	

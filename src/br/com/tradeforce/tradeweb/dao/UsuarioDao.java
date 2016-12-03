@@ -21,7 +21,6 @@ public class UsuarioDao {
 		EasyCriteria<Usuario> easyCriteria = EasyCriteriaFactory.createQueryCriteria(manager, Usuario.class);
 		easyCriteria.andEquals("login", usuario.getLogin());
 		easyCriteria.andEquals("senha", usuario.getSenha());
-		
 		try {
 			return easyCriteria.getSingleResult();
 		} catch (Exception e) {

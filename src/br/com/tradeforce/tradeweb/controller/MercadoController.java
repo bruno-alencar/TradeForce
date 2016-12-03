@@ -18,8 +18,7 @@ import br.com.tradeforce.tradeweb.to.MercadoTo;
 
 @RestController
 public class MercadoController {
-//	@Autowired
-//	private MercadoDao mercadoDao;
+
 
 	@Autowired
 	private MercadoTo mercadoTo;
@@ -44,10 +43,10 @@ public class MercadoController {
 		return mercadoTo.listar();
 	}
 	
-//	@RequestMapping(value="/mercado/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-//	public Mercado consultarPorId(@PathVariable("id") Long id){
-//		return mercadoTo.consultarPorId(id);
-//	}
+	@RequestMapping(value="/mercado/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public Mercado consultarPorId(@PathVariable("id") Long id){
+		return mercadoTo.consultarPorId(id);
+	}
 	
 	
 	@RequestMapping(value="/mercado/{id}", method=RequestMethod.DELETE)

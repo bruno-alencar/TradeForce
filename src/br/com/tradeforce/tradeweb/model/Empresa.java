@@ -15,7 +15,6 @@ public class Empresa {
 	
 	private String nome;
 	private String razaoSocial;
-	@CNPJ
 	private Long cnpj;
 	
 	

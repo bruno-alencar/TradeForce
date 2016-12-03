@@ -1,6 +1,7 @@
 package br.com.tradeforce.tradeweb.to;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class TarefaTo {
 //		tarefa.setMercados(mercados);	
 		tarefa.setMercados(auxiliar.getMercados());
 		tarefa.setRotas(rotas);
+		tarefa.setDataCriacao(new Date(System.currentTimeMillis()));
 
 		tarefaDao.inserir(tarefa);
 	}
@@ -51,6 +53,10 @@ public class TarefaTo {
 
 	public void excluir(Long idTarefa){
 		tarefaDao.excluir(idTarefa);
+	}
+	
+	public void alterar(Tarefa tarefa){
+		tarefaDao.alterar(tarefa);
 	}
 	
 }

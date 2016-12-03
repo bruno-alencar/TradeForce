@@ -26,6 +26,7 @@ public class EmpresaDao {
 
 	public List<Empresa> listar() {
 		EasyCriteria<Empresa> easyCriteria = EasyCriteriaFactory.createQueryCriteria(manager, Empresa.class);
+		easyCriteria.setDistinctTrue();
 		return easyCriteria.getResultList();
 	}
 	
