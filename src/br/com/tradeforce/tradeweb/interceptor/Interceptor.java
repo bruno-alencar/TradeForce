@@ -28,7 +28,8 @@ public class Interceptor extends HandlerInterceptorAdapter{
 			Map<String, Object> claims = verifier.verify(token);
 			
 			if(claims.get("tipo").equals("P")){
-				if (!metodo.getMethod().getName().equals("mostrarTarefa")){
+				if (!metodo.getMethod().getName().equals("mostrarTarefa")||
+					!metodo.getMethod().getName().equals("login")){
 					System.out.println("Promotor não autorizado");
 					response.sendError(HttpStatus.UNAUTHORIZED.value());
 					return false;
