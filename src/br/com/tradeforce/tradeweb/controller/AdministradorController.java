@@ -2,7 +2,6 @@ package br.com.tradeforce.tradeweb.controller;
 import java.net.URI;
 import java.util.List;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tradeforce.tradeweb.model.Administrador;
+import br.com.tradeforce.tradeweb.model.Administrador;
 import br.com.tradeforce.tradeweb.to.AdministradorTo;
 
 @RestController
@@ -24,14 +24,8 @@ public class AdministradorController {
 	
 	
 	@RequestMapping(value="/administrador", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Administrador> inserir(@RequestBody String strlAdministrador){
+	public ResponseEntity<Administrador> inserir(@RequestBody Administrador administrador){
 		try {
-			JSONObject job = new JSONObject(strlAdministrador);
-			
-			Administrador administrador = new Administrador();
-			administrador.setLogin(job.getString("login"));
-			administrador.setNome(job.getString("nome"));
-			administrador.setSenha(job.getString("senha"));
 			
 			administradorTo.inserir(administrador); //Insere a lista no banco de dados
 			
@@ -60,5 +54,16 @@ public class AdministradorController {
 	public ResponseEntity<Void> excluir(@PathVariable("id") long idAdministrador){
 		administradorTo.excluir(idAdministrador);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/administrador/{id}", method=RequestMethod.PUT, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<Void> alterar(@PathVariable("id") long idAdministrador, @RequestBody Administrador administrador) {
+		try{
+			administrador.setId(idAdministrador);
+			administradorTo.alterar(administrador);
+			return ResponseEntity.noContent().build();
+		} catch (Exception e){
+			return ResponseEntity.notFound().build();
+		  }
 	}
 }

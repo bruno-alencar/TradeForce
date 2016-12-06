@@ -46,7 +46,10 @@ public class AdministradorDao {
 	@Transactional
 	public void alterar(Administrador administrador){
 		Administrador administradorAnterior = manager.find(Administrador.class, administrador.getId());	
-		manager.merge(administradorAnterior);
+		administradorAnterior.setNome(administrador.getNome());
+		administradorAnterior.setLogin(administrador.getLogin());
+		administradorAnterior.setSenha(administrador.getSenha());
+		manager.persist(administradorAnterior);
 	}
 	
 }
