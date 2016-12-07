@@ -184,7 +184,8 @@ public class RotaTo {
 
 							for(int l = 0; l < arrayStepsPassoAPasso.length(); l ++){
 								if(arrayStepsPassoAPasso.getJSONObject(l).has("html_instructions")){
-									instrucoes.add(arrayStepsPassoAPasso.getJSONObject(l).getString("html_instructions"));
+									String htmlInstructions = arrayStepsPassoAPasso.getJSONObject(l).getString("html_instructions").replaceAll("<[^>]*>", "");
+									instrucoes.add(htmlInstructions);
 								}
 								
 								if(arrayStepsPassoAPasso.getJSONObject(l).has("polyline")){
@@ -218,7 +219,7 @@ public class RotaTo {
 			urlConnection.addRequestProperty("User-Agent", 
 					"Mozilla/48.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 
-			InputStreamReader inputStreamReader= new InputStreamReader(urlConnection.getInputStream());
+			InputStreamReader inputStreamReader= new InputStreamReader(urlConnection.getInputStream(), "UTF-8");
 			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
 			String inputLine;

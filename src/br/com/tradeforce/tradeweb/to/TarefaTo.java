@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.tradeforce.tradeweb.dao.MercadoDao;
+import br.com.tradeforce.tradeweb.dao.PromotorDao;
 import br.com.tradeforce.tradeweb.dao.TarefaDao;
 import br.com.tradeforce.tradeweb.model.Auxiliar;
 import br.com.tradeforce.tradeweb.model.Localizacao;
@@ -19,6 +21,12 @@ public class TarefaTo {
 
 	@Autowired
 	private TarefaDao tarefaDao;
+	
+	@Autowired
+	private MercadoDao mercadoDao;
+	
+	@Autowired
+	private PromotorDao promotorDao;
 
 	private RotaTo rotaTo = new RotaTo();
 
@@ -27,6 +35,8 @@ public class TarefaTo {
 		List<Localizacao> localizacoes = new ArrayList<Localizacao>();
 		List<Mercado> mercados = new ArrayList<Mercado>();
 		List<Rota> rotas = new ArrayList<Rota>();
+		
+		
 		
 		localizacoes = rotaTo.tracarMelhorRotaWaypoints(auxiliar);
 //		mercados = rotaTo.ordernarMercados(auxiliar.getMercados(), localizacoes);
@@ -38,7 +48,7 @@ public class TarefaTo {
 		tarefa.setMercados(auxiliar.getMercados());
 		tarefa.setRotas(rotas);
 		tarefa.setDataCriacao(new Date(System.currentTimeMillis()));
-
+		
 		tarefaDao.inserir(tarefa);
 	}
 	
