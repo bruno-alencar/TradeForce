@@ -51,6 +51,7 @@ public class PromotorDao {
 		promotorAtualizar.setLogin(promotor.getLogin());
 		promotorAtualizar.setNome(promotor.getNome());
 		promotorAtualizar.setSenha(promotor.getSenha());
+		promotorAtualizar.setEndereco(promotor.getEndereco());
 		manager.persist(promotorAtualizar);
 	}
 	
