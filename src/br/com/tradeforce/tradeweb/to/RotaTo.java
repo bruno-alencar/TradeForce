@@ -132,7 +132,7 @@ public class RotaTo {
 //				return auxiliar;
 //			}
 //			
-			if(auxiliar.getPreco() > rotas.get(i).getPreco()){
+			if(rotas.get(i).getPreco() != null && auxiliar.getPreco() > rotas.get(i).getPreco()){
 				auxiliar = rotas.get(i);
 			}
 		}

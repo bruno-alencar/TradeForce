@@ -37,7 +37,7 @@ public class TarefaTo {
 		List<Rota> rotas = new ArrayList<Rota>();
 		
 		localizacoes = rotaTo.tracarMelhorRotaWaypoints(auxiliar);
-		localizacoes.add(auxiliar.getPromotor().getLocalizacao());
+		//localizacoes.add(auxiliar.getPromotor().getLocalizacao());
 		
 //		mercados = rotaTo.ordernarMercados(auxiliar.getMercados(), localizacoes);
 		rotas = rotaTo.gerarRotas(auxiliar,localizacoes);
