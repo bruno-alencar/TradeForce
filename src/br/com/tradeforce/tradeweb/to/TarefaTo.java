@@ -7,8 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.tradeforce.tradeweb.dao.MercadoDao;
-import br.com.tradeforce.tradeweb.dao.PromotorDao;
 import br.com.tradeforce.tradeweb.dao.TarefaDao;
 import br.com.tradeforce.tradeweb.model.Auxiliar;
 import br.com.tradeforce.tradeweb.model.Localizacao;
@@ -59,7 +57,19 @@ public class TarefaTo {
 	}
 	
 	public List<Tarefa> listar(){
-		return tarefaDao.listar();
+		List<Tarefa> tarefas = tarefaDao.listar();
+		
+		
+		for(int i = 0; i < tarefas.size();i++){
+			Mercado mercado = new Mercado();
+			mercado.setLocalizacao(tarefas.get(i).getPromotor().getLocalizacao());
+			mercado.setEndereco(tarefas.get(i).getPromotor().getEndereco());
+			mercado.setNome("Voltar para casa");
+			
+			tarefas.get(i).getMercados().add(mercado);
+			tarefas.set(i, tarefas.get(i));
+		}		
+		return tarefas;
 	}
 
 	public Tarefa consultarPorPromotorId(Long idPromotor){
