@@ -23,10 +23,10 @@ public class TarefaTo {
 	private TarefaDao tarefaDao;
 	
 	@Autowired
-	private MercadoDao mercadoDao;
+	private MercadoTo mercadoTo;
 	
 	@Autowired
-	private PromotorDao promotorDao;
+	private PromotorTo promotorTo;
 
 	private RotaTo rotaTo = new RotaTo();
 
@@ -36,8 +36,14 @@ public class TarefaTo {
 		List<Mercado> mercados = new ArrayList<Mercado>();
 		List<Rota> rotas = new ArrayList<Rota>();
 		
+		for(int i = 0; i < auxiliar.getMercados().size(); i ++){
+			auxiliar.getMercados().set(i,mercadoTo.consultarPorId(auxiliar.getMercados().get(i).getId()));
+		}
+		
+		auxiliar.setPromotor(promotorTo.consultarPorId(auxiliar.getPromotor().getId()));
+		
+		
 		localizacoes = rotaTo.tracarMelhorRotaWaypoints(auxiliar);
-		//localizacoes.add(auxiliar.getPromotor().getLocalizacao());
 		
 //		mercados = rotaTo.ordernarMercados(auxiliar.getMercados(), localizacoes);
 		rotas = rotaTo.gerarRotas(auxiliar,localizacoes);

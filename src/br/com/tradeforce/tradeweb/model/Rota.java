@@ -32,7 +32,7 @@ public class Rota {
 	
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="polylines", joinColumns=@JoinColumn(name="rota_id"))
-	@Column(length = 5000)
+	@Column(length=5000)
 	private List<String> polylines= new ArrayList<String>();
 	
 	
