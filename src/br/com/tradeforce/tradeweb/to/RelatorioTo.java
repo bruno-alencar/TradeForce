@@ -40,6 +40,9 @@ public class RelatorioTo {
 			}
 			relatorio.setValorTotal(soma);
 			relatorio.setQuantidadeMercados(quantidade);
+			
+			soma = 0.0;
+			quantidade = 0;
 			relatorios.add(relatorio);
 		}
 		
